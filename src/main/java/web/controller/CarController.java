@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class CarController {
@@ -24,10 +25,8 @@ public class CarController {
     }
 
     @GetMapping("/cars")
-    public String getCar(ModelMap model, HttpServletRequest request) {
-        var tempCount = request.getParameter("count");
-        var count = tempCount == null ? 5 : Integer.parseInt(tempCount);
-        List<Car> carList = count < 5 ? carService.getCarAmount(count) : carService.getCarList();
+    public String getCar(ModelMap model, @RequestParam(name = "count", defaultValue = "5") String count) {
+        List<Car> carList = carService.getCarAmount(Integer.parseInt(count));
         model.addAttribute("cars", carList);
         return "cars";
     }

@@ -18,7 +18,7 @@ public class CarService {
     }
 
     public List<Car> getCarAmount(int count) {
-        return  carList.stream().limit(count).toList();
+        return  count < 5 ? carList.stream().limit(count).toList() : carList;
     }
 
     public List<Car> getCarList() {
